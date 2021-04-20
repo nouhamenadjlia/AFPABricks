@@ -1,6 +1,10 @@
 var canvas = document.getElementById('myGame');
 var ctx = canvas.getContext('2d');
 
+
+
+
+var pauseGame = false;
 var rightPressed = false;
 var leftPressed = false;
 document.addEventListener("keydown", keyDownHandler, false);
@@ -35,6 +39,7 @@ function playGame(){
   drawBricks();                           
   drawBall(x, y, ballRadius);
  
+ 
   if(x + xMovement > canvas.width-ballRadius || x + xMovement < ballRadius){
     xMovement = -xMovement;
     randomColor = getRandomColor();
@@ -52,27 +57,29 @@ function playGame(){
     }
     randomColor = getRandomColor();
   } 
-  if( rightPressed ){
+
+
+  if (pauseGame !== true ){
+    if( rightPressed ){
     if(xPlayer + playerWidth >= canvas.width ){
       xPlayer = canvas.width - playerWidth;
     }else{
       xPlayer = xPlayer + 5;
     }
-  }
-  if( leftPressed ){
-    if(xPlayer <= 0 ){
-      xPlayer = 0;
-    }else{
-      xPlayer = xPlayer - 5;
     }
+    if( leftPressed ){
+      if(xPlayer <= 0 ){
+        xPlayer = 0;
+      }else{
+        xPlayer = xPlayer - 5;
+      }
+    }
+    x += xMovement;
+    y += yMovement;
   }
-  x += xMovement;
-  y += yMovement;
-  console.log(score);
+
+console.log(score);
 }
-
-
-
 function startGame(){
   setInterval(playGame, 20);
 }

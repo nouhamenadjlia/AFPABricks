@@ -5,6 +5,16 @@ function keyDownHandler(e) {
     else if(e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = true;
     }
+    if(e.key == " " &&  pauseGame == false) {
+        pauseGame = true;
+        console.log('pause');
+        $('body').css('background', 'pink');
+    }
+    else if(e.key == " " && pauseGame == true) {
+        pauseGame = false;
+        console.log('pause');
+        $('body').css('background', 'white');
+    }
 }
 function keyUpHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
@@ -40,7 +50,7 @@ function drawPlayer(){
     ctx.fill();
     ctx.closePath();
 }
-function drawBrick(x,y){
+function drawBrick(x,y, bricksWidth, bricksHeight){
     ctx.beginPath();
     ctx.rect(x, y, bricksWidth, bricksHeight);
     ctx.fillStyle = "black";
@@ -48,7 +58,7 @@ function drawBrick(x,y){
     ctx.closePath();
 }
 function drawBricks(){
-    var brick = Array();
+    var brick = [];
     var bricksRows = 3;
     var bricksColumns = 11;
     var bricksWidth = 50;
@@ -57,14 +67,25 @@ function drawBricks(){
     var bricksTop = 120;
     var bricksLeft = 20;
     for(var row = 0;row<bricksRows; row++){
+        brick[row] = []; 
         for(var column = 0; column < bricksColumns; column++){
+            brick[row][column] = [];
             brick[row][column].x = bricksLeft;
             brick[row][column].y = bricksTop;
             brick[row][column].active = 1;
-            drawBrick(brick[row][column].x, brick[row][column].y);
-            bricksLeft = bricksLeft + bricksWidth + bricksPadding; 
+            drawBrick(brick[row][column].x, brick[row][column].y, bricksWidth, bricksHeight);
+            bricksLeft = bricksLeft + bricksWidth + bricksPadding;  
         }
         bricksLeft = 20;
         bricksTop = bricksTop + bricksHeight + bricksPadding;
     }  
 }
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
