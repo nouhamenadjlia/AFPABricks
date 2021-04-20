@@ -96,3 +96,8 @@ function hitABrick(brick) {
         }
     }
 }
+
+
+function updateScore(){
+    $('#score').html("Score : "+score);
+}

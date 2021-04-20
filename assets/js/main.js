@@ -85,6 +85,7 @@ function playGame(){
 }
 function startGame(){
   setInterval(playGame, 20);
+  setInterval(updateScore, 1000);
 }
 function endGame(){
   alert('End Game!');
