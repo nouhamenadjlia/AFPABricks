@@ -58,27 +58,20 @@ function drawBrick(x,y, bricksWidth, bricksHeight){
     ctx.closePath();
 }
 function drawBricks(){
-    var brick = [];
-    var bricksRows = 3;
-    var bricksColumns = 11;
-    var bricksWidth = 50;
-    var bricksHeight = 18;
-    var bricksPadding = 12;
-    var bricksTop = 120;
-    var bricksLeft = 20;
+    
     for(var row = 0;row<bricksRows; row++){
-        brick[row] = []; 
         for(var column = 0; column < bricksColumns; column++){
-            brick[row][column] = [];
-            brick[row][column].x = bricksLeft;
-            brick[row][column].y = bricksTop;
-            brick[row][column].active = 1;
-            drawBrick(brick[row][column].x, brick[row][column].y, bricksWidth, bricksHeight);
+            bricks[row][column].x = bricksLeft;
+            bricks[row][column].y = bricksTop;
+            if (bricks[row][column].active == 1){
+                drawBrick(bricks[row][column].x, bricks[row][column].y, bricksWidth, bricksHeight);
+            }
             bricksLeft = bricksLeft + bricksWidth + bricksPadding;  
         }
         bricksLeft = 20;
         bricksTop = bricksTop + bricksHeight + bricksPadding;
-    }  
+    } 
+    bricksTop = 150; 
 }
 
 function getRandomColor() {
@@ -88,4 +81,18 @@ function getRandomColor() {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
+}
+
+function hitABrick(brick) {
+    for(var row=0; row<bricksRows; row++) {
+        for(var column=0; column<bricksColumns; column++) {
+            var brick = bricks[row][column];
+            if(brick.active == 1){
+                if(x > brick.x && x < brick.x+bricksWidth && y > brick.y && y < brick.y+bricksHeight){
+                    yMovement = -yMovement;
+                    brick.active = 0;
+                }
+            }
+        }
+    }
+}
